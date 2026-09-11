@@ -1,0 +1,214 @@
+export PATH=$PATH:~:~/bin
+
+# Set PATH, MANPATH, etc., for Homebrew.
+[ -x "/opt/homebrew/bin/brew" ] && eval "$(/opt/homebrew/bin/brew shellenv)"
+
+export EDITOR=vim
+setopt AUTO_RESUME
+setopt INTERACTIVECOMMENTS
+
+[ -s "${HOME}/.secret_env.bash" ] && source "${HOME}/.secret_env.bash"
+
+### Added by Zinit's installer
+if [[ ! -f $HOME/.local/share/zinit/zinit.git/zinit.zsh ]]; then
+    print -P "%F{33} %F{220}Installing %F{33}ZDHARMA-CONTINUUM%F{220} Initiative Plugin Manager (%F{33}zdharma-continuum/zinit%F{220})…%f"
+    command mkdir -p "$HOME/.local/share/zinit" && command chmod g-rwX "$HOME/.local/share/zinit"
+    command git clone https://github.com/zdharma-continuum/zinit "$HOME/.local/share/zinit/zinit.git" && \
+        print -P "%F{33} %F{34}Installation successful.%f%b" || \
+        print -P "%F{160} The clone has failed.%f%b"
+fi
+
+source "$HOME/.local/share/zinit/zinit.git/zinit.zsh"
+autoload -Uz _zinit
+(( ${+_comps} )) && _comps[zinit]=_zinit
+### End of Zinit's installer chunk
+
+zinit snippet OMZ::lib/git.zsh
+zinit snippet OMZ::lib/completion.zsh
+zinit snippet OMZ::lib/history.zsh
+zinit snippet OMZ::lib/directories.zsh
+zinit snippet OMZ::plugins/git/git.plugin.zsh
+
+zinit light shayneholmes/zsh-eternal-history
+zinit light shayneholmes/zsh-iterm2colors
+zinit light shayneholmes/zsh-vi-mode
+zinit light shayneholmes/zsh-ssh-host-color
+
+command -v fasd >/dev/null 2>&1 && eval "$(fasd --init auto)"
+
+zinit light wookayin/fzf-fasd
+zinit light okapia/zsh-viexchange
+zinit light zsh-users/zsh-autosuggestions
+ZSH_AUTOSUGGEST_USE_ASYNC=true
+
+export ASDF_CONFIG_FILE="${XDG_CONFIG_HOME}/asdf/asdfrc"
+export ASDF_DATA_DIR="${XDG_CACHE_HOME}/asdf"
+zinit light asdf-vm/asdf
+alias aoeu=asdf
+
+zinit ice pick'lowkey.zsh-theme'
+zinit ice atinit'zpcompinit; zpcdreplay'
+zinit light shayneholmes/zsh-themes
+
+# zinit ice pick"async.zsh" src"pure.zsh"
+# zinit light sindresorhus/pure
+
+function config {
+  git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME $@
+}
+compdef config=git
+
+function gclocd {
+  # git clone and enter the cloned file
+  if [[ -z "$2" ]]; then
+    reponame=$(basename "$1" ".git");
+  else
+    reponame=$2;
+  fi
+  git clone "$1" "$reponame" && \
+  cd "$reponame";
+}
+
+alias cm='chezmoi'
+alias dp='duplicacy'
+alias gap='git add -p'
+alias gcf='git commit --fixup'
+alias gcl='gclocd'
+alias gcob='git checkout -b'
+alias gcop='git cop'
+alias gdc='git diff --cached'
+alias gg='git gg'
+alias glp="git log -p"
+alias gp="git push -f --no-verify 2>&1"
+alias gs='git status'
+alias gsh='git show'
+alias jp='json-prettify | less'
+alias json-prettify='pbpaste | jq . --color-output'
+alias l=ls
+alias la='ls -a'
+alias ll='ls -lh'
+alias lla='ls -lah'
+alias lsc='ls -G'
+alias ra='ranger'
+alias td='date +%F'
+alias v='vim'
+alias y='config'
+alias yap='config add -p'
+alias yc!='config commit --amend'
+alias yc='config commit'
+alias yf='config fetch'
+alias ylp='config log -p'
+alias yp='config push'
+alias yrbi='config rebase -i'
+alias ys='config status'
+alias ysh='config show'
+
+alias rc='vim ${ZDOTDIR}/.zshrc && source ${ZDOTDIR}/.zshrc'
+
+if command -v trash >/dev/null 2>&1; then
+  alias rm='trash'
+fi
+
+function vim() {
+  if [ -n "$VIM_TERMINAL" ]; then
+    echo "Already in a vim terminal!"
+    return 1
+  fi
+  command vim $*
+}
+
+# youtube downloading
+ytv()
+{
+  if [ "$#" -eq 0 ]; then ARGS="$(pbpaste)"; else ARGS="$@"; fi
+  for URL in "$ARGS"
+  do
+    echo "$URL"
+    yt-dlp -o '~/Downloads/youtube/video/%(title)s.%(ext)s' "$URL" -f 'bestvideo+bestaudio' --merge-output-format mkv -i --restrict-filenames
+  done
+}
+yta()
+{
+  if [ "$#" -eq 0 ]; then ARGS="$(pbpaste)"; else ARGS="$@"; fi
+  for URL in "$ARGS"
+  do
+    echo "$URL"
+    yt-dlp -o '~/Downloads/youtube/audio/%(title)s.%(ext)s' "$URL" -f 'm4a' --extract-audio -i --restrict-filenames
+  done
+}
+
+# TODO: Pull out this completion thing into its own file
+zle -C all-matches complete-word _generic
+bindkey '^Xa' all-matches
+zstyle ':completion:all-matches:*' insert yes
+zstyle ':completion:all-matches::::' completer \
+  _all_matches _complete
+
+autoload -U +X bashcompinit && bashcompinit
+alias t='todo.sh'
+alias tl='t list'
+alias tlp='t listpri'
+[[ -z /usr/local/Cellar/todo-txt/2.11.0/etc/bash_completion.d/todo_completion ]] && source /usr/local/Cellar/todo-txt/2.11.0/etc/bash_completion.d/todo_completion
+complete -F _todo t
+
+if [[ -v ANDROID_DATA  && -s "${ZDOTDIR}/.zshrc.android" ]]; then
+  source "${ZDOTDIR}/.zshrc.android"
+fi
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+command -v fzf >/dev/null 2>&1 && command -v fd >/dev/null 2>&1 && \
+  export FZF_DEFAULT_COMMAND='fd --type f --hidden --ignore-file ~/.config/fd/ignore .'
+
+export FZF_DEFAULT_OPTS='--bind change:top'
+
+export RIPGREP_CONFIG_PATH="${XDG_CONFIG_HOME}/ripgrep/config"
+
+__pretty_rg() {
+  rg --pretty --no-line-number --no-filename "$*" | less -RFX
+}
+alias prg=__pretty_rg
+
+rg() {
+    if [ -t 1 ]; then
+        command rg -p "$@" | less -RFX
+    else
+        command rg "$@"
+    fi
+}
+
+# -x3 = Set tab stops to 3 spaces (intentionally different from any space counts I would ever use)
+# -R = Output "raw" control characters. (colors)
+# -F = Don't open with less if entire file fits on screen.
+# -s = Squeeze multiple blank lines.
+# -X = Ignore ignore termcap initialization. With xterms it keeps
+#        the last page of the document on the screen. (see
+#        http://www.shallowsky.com/linux/noaltscreen.html)
+export LESS="-x3RFsX"
+export LESSOPEN="| src-hilite-lesspipe.sh %s"
+
+GPG_TTY=$(tty)
+export GPG_TTY
+
+export GOPATH=$HOME/go:/Volumes/code/go
+
+# Increase number of files available. (Used by duplicacy-fuse.)
+ulimit -n 10240
+
+# Report timing statistics for commands that take a while
+export REPORTTIME=10
+
+# Disable snyk messages
+export DOCKER_SCAN_SUGGEST=false
+
+jwtd() {
+    if [[ -x $(command -v jq) ]]; then
+         jq -R 'split(".") | .[0],.[1] | @base64d | fromjson' <<< "${1}"
+         echo "Signature: $(echo "${1}" | awk -F'.' '{print $3}')"
+    fi
+}
+
+export TERM=xterm-256color
+
+if [ -f "${ZDOTDIR}/.zshrc.after" ]; then
+    source "${ZDOTDIR}/.zshrc.after"
+fi

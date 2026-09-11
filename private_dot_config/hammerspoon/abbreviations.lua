@@ -185,12 +185,9 @@ local function script_path()
   local str = debug.getinfo(2, "S").source:sub(2)
   return str:match("(.*/)")
 end
-local after_expansions_thunk, err = loadfile(script_path() .. "abbreviations.lua.after")
-
+local after_expansions_thunk = loadfile(script_path() .. "abbreviations.lua.after")
 if after_expansions_thunk then
   for k,v in pairs(after_expansions_thunk()) do expansions[k] = v end
-else
-  print(("Error\n%s"):format(err))
 end
 
 spoon.TextExpansion:setExpansions(expansions)

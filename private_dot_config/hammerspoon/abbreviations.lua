@@ -26,7 +26,7 @@ local formatDate = function(format, offsetDays)
 end
 
 local DATE_FORMAT_ISO = "%F" -- "2019-01-16"
-local DATE_FORMAT_ISO_BRACES = "[%F]" -- "[2019-01-16]"
+local DATE_FORMAT_ISO_BRACKETS = "[%F]" -- "[2019-01-16]"
 local DATE_FORMAT_LONG_TEXT = "%A, %-e %B %Y" -- "Wednesday, 16 January 2019"
 local DATE_FORMAT_ISO_TIME = "%FT%T" -- "2019-01-16T08:12:09"
 local DATE_FORMAT_SHORT = "%-m/%-e" -- "1/16"
@@ -111,21 +111,23 @@ local immediate_expansions = {
   [";<=;"] = "⇐",
   [";->;"] = "→",
   [";<-;"] = "←",
-  [";?!;"] = "‽",
+  [";?!;"] = "‽", -- interrobang
   [";ge;"] = "≥",
   [";le;"] = "≤",
   [";--;"] = "—",
-  [";~=;"] = "≈",
-  [";md;"] = "—",
-  [";nd;"] = "–",
+  [";~=;"] = "≈", -- approx. equal
+  [";md;"] = "—", -- emdash
+  [";nd;"] = "–", -- endash
   [";cmd;"] = "⌘",
   [";bike;"] = "🚲",
   [";deg;"] = "°",
+  [";div;"] = "÷",
   [";divide;"] = "÷",
   [";negative;"] = "−",
-  [";neg;"] = "−",
+  [";neg;"] = "−", -- math minus
+  [";minus;"] = "−", -- math minus
   [";key;"] = "🔑",
-  [";.;"] = "·",
+  [";.;"] = "·", -- interpunct
   [";shrug;"] = "¯\\_(ツ)_/¯",
   [";+1;"] = "👍",
   [";tu;"] = "👍", -- thumbs up
@@ -134,7 +136,20 @@ local immediate_expansions = {
   [";tada;"] = "🎉",
   [";tflip;"] = "(╯°□°）╯︵ ┻━┻",
   [";times;"] = "×",
+  [";mult;"] = "×",
   [";tm;"] = "™",
+
+  -- deadkeys for Spanish
+  ["~n"] = "ñ",
+  ["'a"] = "á",
+  ["'e"] = "é",
+  ["'i"] = "í",
+  ["'o"] = "ó",
+  ["'u"] = "ú",
+  [":u"] = "ü", -- sideways diaeresis
+  ["''u"] = "ü", -- double dots
+  ["'!"] = "¡",
+  ["'?"] = "¿",
 }
 
 local expansions = {
@@ -147,19 +162,20 @@ local expansions = {
   -- btw = "by the way",
   -- lgtm = { expansion = "Looks good to me", matchcase = false},
   rcgnth = function() hs.alert.show("Testing...") end,
-  tb = formatDate(DATE_FORMAT_ISO_BRACES),
+  tb = formatDate(DATE_FORMAT_ISO_BRACKETS),
   td = formatDate(DATE_FORMAT_LONG_TEXT),
   tn = formatDate(DATE_FORMAT_SHORT),
-  [".ts"] = {
+  [".ts"] = { -- ignore ts files
     expansion = "",
     backspace = false,
     internal = true,
   },
-  ts = formatDate(DATE_FORMAT_ISO),
-  tt = formatDate(DATE_FORMAT_ISO_TIME),
-  yts = formatDate(DATE_FORMAT_ISO, -1),
-  yd = formatDate(DATE_FORMAT_LONG_TEXT, -1),
+  ts = formatDate(DATE_FORMAT_ISO), -- timestamp
+  tt = formatDate(DATE_FORMAT_ISO_TIME), -- timestamp, with time
+  yts = formatDate(DATE_FORMAT_ISO, -1), -- yesterday timestamp
+  yd = formatDate(DATE_FORMAT_LONG_TEXT, -1), -- yesterday day
   sb = "[Shayne]", -- tb but with s for my name
+  segun = "según",
 }
 
 for k,v in pairs(date_expansions) do expansions[k] = v end

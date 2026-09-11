@@ -181,6 +181,18 @@ local expansions = {
 for k,v in pairs(date_expansions) do expansions[k] = v end
 for k,v in pairs(immediate_expansions) do expansions[k] = { expansion = v, internal = true, waitforcompletionkey = false, sendcompletionkey = false } end
 
+local function script_path()
+  local str = debug.getinfo(2, "S").source:sub(2)
+  return str:match("(.*/)")
+end
+local after_expansions_thunk, err = loadfile(script_path() .. "abbreviations.lua.after")
+
+if after_expansions_thunk then
+  for k,v in pairs(after_expansions_thunk()) do expansions[k] = v end
+else
+  print(("Error\n%s"):format(err))
+end
+
 spoon.TextExpansion:setExpansions(expansions)
 
 -- spoon.TextExpansion:setDebug(true)

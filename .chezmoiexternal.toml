@@ -5,3 +5,8 @@
 [".config/hammerspoon/Spoons/TextExpansion.spoon"]
     type = "git-repo"
     url = "https://github.com/shayneholmes/hammerspoon-TextExpansion.git"
+["bin/duplicacy"]
+    {{ $duplicacyVersion := "3.2.5" -}}
+    type = "file"
+    executable = true
+    url = "https://github.com/gilbertchen/duplicacy/releases/download/v{{$duplicacyVersion}}/duplicacy_{{if eq "darwin" .chezmoi.os}}osx{{else}}{{.chezmoi.os}}{{end}}_{{.chezmoi.arch}}_{{ $duplicacyVersion }}"

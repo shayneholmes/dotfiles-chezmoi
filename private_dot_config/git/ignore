@@ -1,0 +1,16 @@
+*.swo
+*.swp
+*~
+.DS_Store
+.env
+.envrc
+.fdignore
+.ignore
+.jj
+.projections.json
+.rgignore
+.tool-versions
+.xmark.*
+tags
+tags.lock
+tags.temp

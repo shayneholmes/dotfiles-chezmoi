@@ -1,0 +1,10 @@
+options.quitguard = True
+
+def percentile(p):
+	def agg(values):
+		L = sorted(values)
+		return L[(len(L)*p)//100]
+	return agg
+
+vd.aggregator('p95', percentile(95))
+vd.aggregator('p99', percentile(99))

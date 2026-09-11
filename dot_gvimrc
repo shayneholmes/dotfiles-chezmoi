@@ -1,0 +1,8 @@
+colorscheme evening
+highlight SpellBad gui=reverse
+" turn off scrollbars by default
+set guioptions-=r
+" Use CtrlP on gui, since fzf makes its own windows
+nnoremap <leader>f :CtrlPCurWD<cr> " files
+nnoremap <leader>h :CtrlPMRUFiles<cr> " history
+nnoremap <leader>q :CtrlPBuffer<cr> " quick-buffer

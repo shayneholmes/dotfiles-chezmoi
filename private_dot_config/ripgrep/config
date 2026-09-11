@@ -1,0 +1,6 @@
+--smart-case
+# valid color types: path, line, column, match
+--colors
+match:fg:green
+--colors
+path:fg:blue

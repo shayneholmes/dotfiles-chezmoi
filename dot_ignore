@@ -1,0 +1,16 @@
+._zplugin
+/.Trash
+/.cache
+/.cargo
+/.config/yarn
+/.dotfiles
+/.gradle
+/.node-gyp
+/.npm
+/.nuget
+/.vscode
+/Applications
+/Google Drive File Stream
+/Library
+node_modules
+.jj

@@ -6,7 +6,11 @@
     type = "git-repo"
     url = "https://github.com/shayneholmes/hammerspoon-TextExpansion.git"
 ["bin/duplicacy"]
-    {{ $duplicacyVersion := "3.2.5" -}}
+    {{ with . -}}
+    {{ $version := "3.2.5" -}}
+    {{ $os := .chezmoi.os | replace "darwin" "osx" -}}
+    {{ $arch := .chezmoi.arch | replace "amd64" "x64" -}}
     type = "file"
     executable = true
-    url = "https://github.com/gilbertchen/duplicacy/releases/download/v{{$duplicacyVersion}}/duplicacy_{{if eq "darwin" .chezmoi.os}}osx{{else}}{{.chezmoi.os}}{{end}}_{{.chezmoi.arch}}_{{ $duplicacyVersion }}"
+    url = "https://github.com/gilbertchen/duplicacy/releases/download/v{{$version}}/duplicacy_{{$os}}_{{$arch}}_{{$version}}"
+    {{ end -}}

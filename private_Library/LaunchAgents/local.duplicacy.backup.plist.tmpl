@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!-- Install with `launchctl load ~/Library/LaunchAgents/local.duplicacy.backup.plist` -->
+<!-- Find ids with `id` -->
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>local.duplicacy.backup</string>
+  <key>Program</key>
+  <string>/usr/bin/shortcuts</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/usr/bin/shortcuts</string>
+    <string>run</string>
+    <string>Duplicacy</string>
+  </array>
+  <key>EnvironmentVariables</key>
+  <dict>
+    <key>PATH</key>
+    <string>/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:{{.chezmoi.homeDir}}/bin</string>
+    <key>REPO_PATHS</key>
+    <string>{{.chezmoi.homeDir}}</string>
+  </dict>
+  <key>StandardOutPath</key>
+  <string>/tmp/duplicacy.backup.stdout</string>
+  <key>UserName</key>
+  <string>{{.chezmoi.username}}</string>
+  <key>StandardErrorPath</key>
+  <string>{{.chezmoi.config.tempDir}}/duplicacy.backup.stderr</string>
+  <key>StartCalendarInterval</key>
+  <dict>
+    <key>Minute</key>
+    <integer>45</integer>
+  </dict>
+  <key>Nice</key>
+  <integer>10</integer>
+</dict>
+</plist>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>local.notational.clone</string>
+  <key>Program</key>
+  <string>{{.chezmoi.homeDir}}/scripts/update-notes-git</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>{{.chezmoi.homeDir}}/scripts/update-notes-git</string>
+  </array>
+  <key>EnvironmentVariables</key>
+  <dict>
+    <key>PATH</key>
+    <string>/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin</string>
+  </dict>
+  <key>StandardOutPath</key>
+  <string>/tmp/notationalvelocitysync.stdout</string>
+  <key>UserName</key>
+  <string>{{.chezmoi.username}}</string>
+  <key>StandardErrorPath</key>
+  <string>/tmp/notationalvelocitysync.stderr</string>
+  <key>StartCalendarInterval</key>
+  <dict>
+    <key>Hour</key>
+    <integer>3</integer>
+    <key>Minute</key>
+    <integer>0</integer>
+  </dict>
+  <key>Nice</key>
+  <integer>10</integer>
+</dict>
+</plist>

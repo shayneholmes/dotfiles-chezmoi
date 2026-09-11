@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+set -e -o pipefail -x
+
+WORKING_DIR={{chezmoi.homeDir}}/notes
+GIT_DIR={{chezmoi.homeDir}}/code/notes-git
+
+GIT_DIR="${GIT_DIR}" GIT_WORK_TREE="${WORKING_DIR}" git add .
+GIT_DIR="${GIT_DIR}" GIT_WORK_TREE="${WORKING_DIR}" git commit -m "$(date +'%FT%T')" --no-gpg-sign --allow-empty

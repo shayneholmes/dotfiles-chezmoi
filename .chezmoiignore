@@ -1,3 +1,9 @@
 README.md
 tags
 **/*.after # Expansion points
+{{- if not .hasGui }}
+.config/hammerspoon/**
+{{- end }}
+{{- if ne "darwin" .chezmoi.os }}
+.gvimrc
+{{- end }}

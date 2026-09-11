@@ -9,11 +9,8 @@ local start = os.clock()
 require("hs.ipc") -- to use 'hs' command-line tool
 require("reload") -- must come before actions to hook reload
 require("alert") -- must come before actions to hook alert.show
-require("windowmgmt")
 require("timer")
 require("abbreviations")
-require("audiodevices").begin()
--- require("zoom-menubar").begin()
 
 actions = require("actions")
 

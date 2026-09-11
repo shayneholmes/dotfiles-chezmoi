@@ -1,5 +1,4 @@
 local actions = {}
-local environment = require("environment")
 
 -- make a set from a table
 local function Set(list)
@@ -201,57 +200,8 @@ end
 
 actions.refreshbitbar = function() hs.execute("open -g 'xbar://app.xbarapp.com/refreshAllPlugins'") end
 
-audiodevices = require("audiodevices")
-actions.toggleAudioDevice = audiodevices.toggleAudioDevice
-
 actions.noop = function()
   hs.alert.show("No-op'ed")
-end
-
--- Full-screen toggle
---
--- When I'm undocked, my screen is small, so I want certain ones full-screen.
--- But when I'm docked, I want all my apps windowable. This triggers the
--- appropriate action, relying on the environment to determine whether I'm
--- docked or not.
---
--- If docked: un-full-screen all apps
---
--- If undocked: Move whitelisted apps to full-screen
---
-local wf=hs.window.filter
-
-local get_windows_to_fullscreen = function()
-  local fullscreen_apps = { -- apps that should be fullscreened when not docked
-    "Google Chrome",
-    "iTerm2",
-  }
-
-  local filter = wf.new(false)
-  map(function(app) filter:setAppFilter(app, {fullscreen=false}) end, fullscreen_apps)
-  return filter:getWindows()
-end
-
-local get_windows_to_restore = function()
-  local filter = wf.new(true):setOverrideFilter({fullscreen=true})
-  return filter:getWindows();
-end
-
-actions.togglefullscreen = function()
-  local want_full_screen = not environment:isDocked()
-
-  local action_verb
-  local windows
-  if want_full_screen then
-    action_verb = "Maximized"
-    windows = get_windows_to_fullscreen()
-  else
-    action_verb = "Un-fullscreened"
-    windows = get_windows_to_restore()
-  end
-  map(function(w) w:setFullScreen(want_full_screen) end, windows)
-  local windowNames = map(printwindow, windows)
-  hs.alert.show(("%s %d windows"):format(action_verb, #windows, table.concat(windowNames,"\n")))
 end
 
 return actions

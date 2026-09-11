@@ -1,0 +1,2 @@
+alias jp='json-prettify | less'
+alias json-prettify='pbpaste | jq . --color-output'

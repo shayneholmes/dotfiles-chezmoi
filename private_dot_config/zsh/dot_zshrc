@@ -18,6 +18,9 @@ if [[ ! -f $HOME/.local/share/zinit/zinit.git/zinit.zsh ]]; then
         print -P "%F{160} The clone has failed.%f%b"
 fi
 
+# https://github.com/ohmyzsh/ohmyzsh#disable-async-git-prompt
+zstyle ':omz:alpha:lib:git' async-prompt no
+
 source "$HOME/.local/share/zinit/zinit.git/zinit.zsh"
 autoload -Uz _zinit
 (( ${+_comps} )) && _comps[zinit]=_zinit
@@ -82,8 +85,6 @@ alias glp="git log -p"
 alias gp="git push"
 alias gs='git status'
 alias gsh='git show'
-alias jp='json-prettify | less'
-alias json-prettify='pbpaste | jq . --color-output'
 alias l=ls
 alias la='ls -a'
 alias ll='ls -lh'
@@ -117,26 +118,6 @@ function vim() {
   command vim $*
 }
 
-# youtube downloading
-ytv()
-{
-  if [ "$#" -eq 0 ]; then ARGS="$(pbpaste)"; else ARGS="$@"; fi
-  for URL in "$ARGS"
-  do
-    echo "$URL"
-    yt-dlp -o '~/Downloads/youtube/video/%(title)s.%(ext)s' "$URL" -f 'bestvideo+bestaudio' --merge-output-format mkv -i --restrict-filenames
-  done
-}
-yta()
-{
-  if [ "$#" -eq 0 ]; then ARGS="$(pbpaste)"; else ARGS="$@"; fi
-  for URL in "$ARGS"
-  do
-    echo "$URL"
-    yt-dlp -o '~/Downloads/youtube/audio/%(title)s.%(ext)s' "$URL" -f 'm4a' --extract-audio -i --restrict-filenames
-  done
-}
-
 # TODO: Pull out this completion thing into its own file
 zle -C all-matches complete-word _generic
 bindkey '^Xa' all-matches
@@ -150,10 +131,6 @@ alias tl='t list'
 alias tlp='t listpri'
 [[ -z /usr/local/Cellar/todo-txt/2.11.0/etc/bash_completion.d/todo_completion ]] && source /usr/local/Cellar/todo-txt/2.11.0/etc/bash_completion.d/todo_completion
 complete -F _todo t
-
-if [[ -v ANDROID_DATA  && -s "${ZDOTDIR}/.zshrc.android" ]]; then
-  source "${ZDOTDIR}/.zshrc.android"
-fi
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 command -v fzf >/dev/null 2>&1 && command -v fd >/dev/null 2>&1 && \
@@ -208,6 +185,18 @@ jwtd() {
 }
 
 export TERM=xterm-256color
+
+if [[ -v ANDROID_DATA  && -s "${ZDOTDIR}/.zshrc.android" ]]; then
+  source "${ZDOTDIR}/.zshrc.android"
+fi
+
+if [ -f "${ZDOTDIR}/.zshrc.darwin" ]; then
+    source "${ZDOTDIR}/.zshrc.darwin"
+fi
+
+if [ -f "${ZDOTDIR}/.zshrc.personal" ]; then
+    source "${ZDOTDIR}/.zshrc.personal"
+fi
 
 if [ -f "${ZDOTDIR}/.zshrc.after" ]; then
     source "${ZDOTDIR}/.zshrc.after"

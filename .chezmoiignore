@@ -6,4 +6,8 @@ tags
 {{- end }}
 {{- if ne "darwin" .chezmoi.os }}
 .gvimrc
+**/*.darwin
+{{- end }}
+{{- if not .isPersonalDevice }}
+**/*.personal
 {{- end }}

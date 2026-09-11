@@ -1,6 +1,7 @@
 {{- $hostname := promptStringOnce . "hostname" "Hostname" .chezmoi.hostname }}
 {{- $email := promptStringOnce . "email" "Email address" "user@example.com" -}}
 {{- $hasGui := promptBoolOnce . "hasGui" "Does this machine have a screen and keyboard" true -}}
+{{- $isPersonalDevice := promptBoolOnce . "isPersonalDevice" "Is this a personal device" true -}}
 
 {{- /* Remove whitespace */ -}}
 
@@ -8,3 +9,4 @@
     hostname = {{ $hostname | quote }}
     email = {{ $email | quote }}
     hasGui = {{ $hasGui }}
+    isPersonalDevice = {{ $isPersonalDevice }}

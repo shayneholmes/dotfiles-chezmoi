@@ -1,0 +1,19 @@
+# youtube downloading
+ytv()
+{
+  if [ "$#" -eq 0 ]; then ARGS="$(pbpaste)"; else ARGS="$@"; fi
+  for URL in "$ARGS"
+  do
+    echo "$URL"
+    yt-dlp -o '~/Downloads/youtube/video/%(title)s.%(ext)s' "$URL" -f 'bestvideo+bestaudio' --merge-output-format mkv -i --restrict-filenames
+  done
+}
+yta()
+{
+  if [ "$#" -eq 0 ]; then ARGS="$(pbpaste)"; else ARGS="$@"; fi
+  for URL in "$ARGS"
+  do
+    echo "$URL"
+    yt-dlp -o '~/Downloads/youtube/audio/%(title)s.%(ext)s' "$URL" -f 'm4a' --extract-audio -i --restrict-filenames
+  done
+}

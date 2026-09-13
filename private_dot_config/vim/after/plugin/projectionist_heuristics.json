@@ -1,0 +1,36 @@
+{
+	"go.mod": {
+		"*_test.go": {
+			"alternate": [
+				"{}.go"
+			],
+			"type": "test"
+		},
+		"*.go": {
+			"alternate": [
+				"{}_test.go"
+			],
+			"type": "source"
+		}
+	},
+	"package.json&spec/": {
+		"spec/*.test.ts": {
+			"alternate": [
+				"src/{}.ts"
+			],
+			"type": "test"
+		},
+		"src/**/__mocks__/*.ts": {
+			"alternate": [
+				"src/{dirname}/{basename}.ts"
+			],
+			"type": "mock"
+		},
+		"src/*.ts": {
+			"alternate": [
+				"spec/{}.test.ts"
+			],
+			"type": "source"
+		}
+	}
+}

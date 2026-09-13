@@ -1,0 +1,268 @@
+scriptencoding utf8
+
+let runningOnPhone=!empty($ANDROID_DATA)
+
+set nocompatible
+set nohlsearch
+set background=dark
+set tabstop=2
+set shiftwidth=0 " Use tabstop
+set softtabstop=-1 " Use shiftwidth
+set history=10000
+set hidden
+set linebreak
+set nojoinspaces
+if has('&nofixeol')
+  set nofixeol
+endif
+if has('cryptv')
+  set cryptmethod=blowfish2
+endif
+augroup vimrc | augroup END
+
+" set paths to use XDG basedir spec
+set runtimepath^=$XDG_CONFIG_HOME/vim
+set runtimepath+=$XDG_CONFIG_HOME/vim/after
+set directory=$XDG_CACHE_HOME/vim,~/,/tmp
+set backupdir=$XDG_CACHE_HOME/vim,~/,/tmp
+set undofile
+set undodir=$XDG_CACHE_HOME/vim,/tmp
+if !has('nvim')
+  set viminfo+=n$XDG_CACHE_HOME/vim/viminfo
+endif
+
+" set leader
+let mapleader=' '
+let maplocalleader=' '
+
+" show mode with cursor shape
+" http://vim.wikia.com/wiki/Configuring_the_cursor
+if &term =~# 'xterm\|screen'
+  let &t_SI = "\<Esc>[6 q" " Solid vertical bar in insert mode
+  let &t_SR = "\<Esc>[4 q" " Solid underscore in replace mode
+  let &t_EI = "\<Esc>[2 q" " Solid block in normal mode
+endif
+
+" reload and :PlugInstall to install plugins
+
+call plug#begin('$XDG_CACHE_HOME/vim/plugged')
+Plug 'andymass/vim-matchup'
+  let g:matchup_matchparen_status_offscreen = 0 " Don't show matches off-screen
+  let g:matchup_matchparen_enabled = 0
+
+Plug 'AndrewRadev/splitjoin.vim'
+Plug 'christoomey/vim-tmux-navigator'
+Plug 'christoomey/vim-sort-motion'
+Plug 'dbmrq/vim-redacted'
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+  let g:go_fmt_command = "goimports"
+Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  }
+Plug 'jremmen/vim-ripgrep'
+  let g:rg_command = 'rg -S --vimgrep'
+Plug 'jamessan/vim-gnupg'
+  let g:GPGFilePattern = '*.{gpg,asc,pgp},*.asc.txt,*.gpg.txt'
+  let g:GPGPreferArmor = 1
+  let g:GPGPreferSign = 1
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
+  let g:fzf_layout = { 'down': '40%' }
+Plug 'junegunn/goyo.vim'
+  let g:goyo_width = 80 " default: 80
+  let g:goyo_height = '90%' " default: 85%
+  let g:goyo_linenr = 0 " default: 0
+  nnoremap yog :Goyo<CR>
+Plug 'junegunn/gv.vim' " What's this?
+Plug 'junegunn/limelight.vim'
+  nnoremap yoL :Limelight!!<CR>
+Plug 'junegunn/vim-peekaboo'
+  let g:peekaboo_delay = 500 " ms, so I'm not bothered if I know what I want
+Plug 'ludovicchabant/vim-gutentags'
+  let g:gutentags_ctags_exclude = ['node_modules', 'coverage/lcov-report', 'qstrap', 'dist', 'compiled_js']
+Plug 'kana/vim-textobj-entire'
+  Plug 'kana/vim-textobj-user'
+Plug 'kana/vim-textobj-user'
+Plug 'ledger/vim-ledger'
+  " Strict checking
+  let g:ledger_extra_options = '--pedantic --explicit'
+Plug 'masukomi/vim-markdown-folding' " could get rid of
+Plug 'mbbill/undotree'
+Plug 'moll/vim-bbye'
+Plug 'nathangrigg/vim-beancount'
+Plug 'ntpeters/vim-better-whitespace'
+  let g:better_whitespace_enabled=0
+  let g:strip_whitespace_on_save=1
+  let g:strip_whitespace_confirm=0
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim'
+Plug 'pangloss/vim-javascript'
+Plug 'pedrohdz/vim-yaml-folds'
+Plug 'rhysd/vim-fixjson'
+Plug 'sheerun/vim-polyglot'
+Plug 'shayneholmes/vim-censor'
+Plug 'shayneholmes/vim-parametric'
+Plug 'shayneholmes/vim-redrum'
+Plug 'shayneholmes/vim-wpm'
+Plug 'shumphrey/fugitive-gitlab.vim'
+  let g:fugitive_gitlab_domains = [$GITLAB_DOMAIN]
+Plug 'tommcdo/vim-exchange'
+Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-dispatch'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-obsession'
+  Plug 'dhruvasagar/vim-prosession'
+  let g:prosession_dir = expand('$XDG_CACHE_HOME/vim/session')
+  if has('gui_running')
+    let g:loaded_prosession = 1 " disable
+  endif
+Plug 'tpope/vim-projectionist'
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-rhubarb'
+Plug 'tpope/vim-sensible'
+Plug 'tpope/vim-sleuth'
+Plug 'tpope/vim-unimpaired'
+Plug 'tpope/vim-speeddating'
+Plug 'tpope/vim-surround'
+Plug 'vim-airline/vim-airline'
+  " Allow spaces after tabs, I see this a lot in monolith
+  let g:airline#extensions#whitespace#mixed_indent_algo = 1
+  " Integrate with airline
+  let g:airline#extensions#ale#enabled = 1
+Plug 'vim-airline/vim-airline-themes'
+Plug 'w0rp/ale'
+call plug#end()
+
+" Configure swap mode
+" gs is handed over to sort-motion
+" nmap gS <Plug>(swap-interactive)
+" xmap gS <Plug>(swap-interactive)
+nmap g< <Plug>(swap-prev)
+xmap g< <Plug>(swap-prev)
+nmap g> <Plug>(swap-next)
+xmap g> <Plug>(swap-next)
+
+" Fuzzy completion - use fzf by default
+" But see .gvimrc and plugin/android-environment for overrides
+nnoremap <leader>q :Buffers<cr>
+nnoremap <leader>f :Files<cr>
+nnoremap <leader>h :History<cr>
+
+" Window switching shortcuts; blends with tmux config to work across panes
+nnoremap <c-j> <c-w>j
+nnoremap <c-k> <c-w>k
+nnoremap <c-h> <c-w>h
+nnoremap <c-l> <c-w>l
+
+nnoremap <c-w><c-z> :TabZoom<CR>
+nnoremap <c-w>z :TabZoom<CR>
+
+" Switch ' and `; make in-line marks the first option for me
+nnoremap ' `
+nnoremap ` '
+
+" Easy exit insert mode from home row-ish
+inoremap jk <esc>
+cnoremap jk <c-c>
+
+" Make Y work right!
+nnoremap Y y$
+
+" Easy rg a word
+nnoremap <silent> <Leader>w :Rg -sFw '<cword>'<CR>
+nnoremap <silent> <Leader>W :Rg -sFw '<cWORD>'<CR>
+
+" Easy tag search using :tjump
+nnoremap <silent> <Leader>t g<C-]>
+" Show in preview window
+nnoremap <silent> <Leader>T <C-w>g}
+
+" Easy quicklist nav (use this with rg a lot)
+nnoremap <Leader>n :cn<CR>
+nnoremap <Leader>p :cp<CR>
+
+" quick spelling mode (yos from unimpaired)
+" n/N to get to spelling errors, q for quick fix, zq for not-so-quick fix
+nnoremap <expr> n &l:spell ? "]s" : "n"
+nnoremap <expr> N &l:spell ? "[s" : "N"
+nnoremap <expr> q &l:spell ? "1z=" : "q"
+nnoremap <expr> zq &l:spell ? "z=" : "zq"
+highlight SpellBad gui=bold guifg=Green cterm=bold ctermfg=Green ctermbg=None
+highlight! link SpellRare SpellBad
+highlight! link SpellCap SpellBad
+
+" quick spelling fix outside spelling mode
+nmap <Leader>s <Plug>QuickspellFix
+
+" copy location
+nmap <Leader>yl <Plug>CopyLocation
+
+" See the invisible (yol from unimpaired)
+set listchars=tab:>\ ,trail:_,nbsp:.,extends:>,precedes:<
+highlight NonText term=bold ctermfg=6 gui=bold guifg=Cyan
+highlight! link SpecialKey NonText
+set breakindent
+set breakindentopt=shift:1,min:20
+
+" Shifty writing
+command! W w
+
+" copy and paste with all yanks and pastes
+set clipboard=unnamed
+
+" date abbreviations
+inoreabbrev <expr> ts strftime("%F") " timestamp: 2018-08-03
+inoreabbrev <expr> tt strftime("%FT%T") " timestamp with time: 2018-08-03T09:13:16
+inoreabbrev <expr> td strftime("%A, %-e %B %Y") " today's date: Friday, 3 August 2018
+inoreabbrev <expr> yd strftime("%A, %-e %B %Y", localtime()-24*3600) " yesterday's date: Thursday, 2 August 2018
+
+" map semicolon to colon
+nnoremap ; :
+nnoremap ;; ;
+vnoremap ; :
+vnoremap ;; ;
+
+" easy vimrc edit
+nnoremap <silent> <Leader>ea :e $XDG_CONFIG_HOME/vim/plugin/autocorrect.vim<CR>
+nnoremap <silent> <Leader>ej :e $XDG_CONFIG_HOME/vim/plugin/start-journal.vim<CR>
+nnoremap <silent> <Leader>ec :e $HOME/scripts/configure_macos<CR>
+nnoremap <silent> <Leader>et :e ~/Sync/Syncthing/todo/todo.txt<CR>
+nnoremap <silent> <Leader>ev :e $XDG_CONFIG_HOME/vim/vimrc<CR>
+nnoremap <silent> <Leader>ez :e $XDG_CONFIG_HOME/zsh/.zshrc<CR>
+
+" dev commands
+nnoremap <silent> <Leader>vt :vertical terminal<CR>
+
+" quick redraw (because macVim has trouble with this in full-screen)
+nnoremap <silent> <Leader>r :redraw!<CR>
+
+set secure
+
+" journaling setup: j -> journal
+nmap <Leader>j <Plug>JournalingStart
+
+" remap f to search in Normal, but keep it the same in operator-pending mode
+" Use very no-magic to make it more literal
+nnoremap f /\V
+nnoremap F ?\V
+
+" terminal-job mode bindings
+" tmux navigator key shortcuts
+tnoremap <silent> <c-h> <c-w>h
+tnoremap <silent> <c-j> <c-w>j
+tnoremap <silent> <c-k> <c-w>k
+tnoremap <silent> <c-l> <c-w>l
+" tab zoom keys
+tnoremap <c-w><c-z> <c-w>:TabZoom<CR>
+tnoremap <c-w>z <c-w>:TabZoom<CR>
+" semicolon
+tnoremap <c-w>; <c-w>:
+
+" Draw less noisy window borders
+set fillchars+=vert:│
+" Override color scheme to make split the same color as tmux's default
+autocmd vimrc ColorScheme * highlight VertSplit cterm=NONE ctermfg=Green ctermbg=NONE
+autocmd BufNewFile,BufRead *.bee setfiletype sh
+highlight VertSplit cterm=NONE ctermfg=Green ctermbg=NONE
+
+set mouse=a
+
+" vim:et

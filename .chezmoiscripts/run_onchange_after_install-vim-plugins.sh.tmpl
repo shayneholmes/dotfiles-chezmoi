@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+# vimrc hash, so this runs whenever that changes:
+# {{ include "private_dot_config/vim/vimrc" | sha256sum }}
+
+vim -es -u ~/.config/vim/vimrc -i NONE -c "PlugInstall" -c "qa"

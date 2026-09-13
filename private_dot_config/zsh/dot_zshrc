@@ -44,7 +44,7 @@ ZSH_AUTOSUGGEST_USE_ASYNC=true
 
 export ASDF_CONFIG_FILE="${XDG_CONFIG_HOME}/asdf/asdfrc"
 export ASDF_DATA_DIR="${XDG_CACHE_HOME}/asdf"
-zinit light asdf-vm/asdf
+export PATH="$ASDF_DATA_DIR/shims:$PATH"
 alias aoeu=asdf
 
 zinit ice pick'lowkey.zsh-theme'

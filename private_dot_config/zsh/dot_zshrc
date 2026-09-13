@@ -7,8 +7,6 @@ export EDITOR=vim
 setopt AUTO_RESUME
 setopt INTERACTIVECOMMENTS
 
-[ -s "${HOME}/.secret_env.bash" ] && source "${HOME}/.secret_env.bash"
-
 ### Added by Zinit's installer
 if [[ ! -f $HOME/.local/share/zinit/zinit.git/zinit.zsh ]]; then
     print -P "%F{33} %F{220}Installing %F{33}ZDHARMA-CONTINUUM%F{220} Initiative Plugin Manager (%F{33}zdharma-continuum/zinit%F{220})…%f"
@@ -188,6 +186,10 @@ export TERM=xterm-256color
 
 if [[ -v ANDROID_DATA  && -s "${ZDOTDIR}/.zshrc.android" ]]; then
   source "${ZDOTDIR}/.zshrc.android"
+fi
+
+if [ -s "${ZDOTDIR}/.zshrc.local" ]; then
+  source "${ZDOTDIR}/.zshrc.local"
 fi
 
 if [ -f "${ZDOTDIR}/.zshrc.darwin" ]; then

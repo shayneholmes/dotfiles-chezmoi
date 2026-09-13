@@ -1,0 +1,11 @@
+{{ if ne .hostname .chezmoi.hostname -}}
+#!/usr/bin/env bash
+
+## Change hostname
+# [ https://knowledge.autodesk.com/support/flame-products/learn-explore/caas/sfdcarticles/sfdcarticles/Setting-the-Mac-hostname-or-computer-name-from-the-terminal.html ]
+
+sudo scutil --set HostName {{ .hostname | quote }}
+sudo scutil --set LocalHostName {{ .hostname | quote }}
+sudo scutil --set ComputerName {{ .hostname | quote }}
+dscacheutil -flushcache
+{{ end -}}

@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -e -o pipefail -x
 
 # vimrc hash, so this runs whenever that changes:
 # {{ include "private_dot_config/vim/vimrc" | sha256sum }}

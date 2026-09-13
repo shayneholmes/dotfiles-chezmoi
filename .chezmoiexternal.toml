@@ -14,3 +14,6 @@
     executable = true
     url = "https://github.com/gilbertchen/duplicacy/releases/download/v{{$version}}/duplicacy_{{$os}}_{{$arch}}_{{$version}}"
     {{ end -}}
+["bin/yt-dlp"]
+    type = "file"
+    url = "https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp_macos"

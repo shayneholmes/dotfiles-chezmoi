@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+set -e -o pipefail -x
+
+# Change path where hammerspoon looks for config
+defaults write org.hammerspoon.Hammerspoon MJConfigFile "${HOME}/.config/hammerspoon/init.lua"
+# Make sure isolator runs multi-monitor
+defaults write eu.willmore.isolator HideOnMainScreenOnly 0
+# Don't swipe in Chrome
+defaults write com.google.Chrome AppleEnableSwipeNavigateWithScrolls -bool FALSE
+
+# Install zinit
+bash -c "$(curl --fail --show-error --silent --location https://raw.githubusercontent.com/zdharma-continuum/zinit/HEAD/scripts/install.sh)"
+if ! [ -d ~/.config/zsh/.zinit ]; then
+	mkdir ~/.config/zsh/.zinit
+	git clone https://github.com/zdharma/zinit.git ~/.config/zsh/.zinit/bin
+fi
+
+# Install asdf plugins
+asdf plugin-add python
+asdf plugin-add nodejs
+asdf plugin-add yarn

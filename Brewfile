@@ -99,9 +99,11 @@ brew "pinentry-mac"
 brew "pipx"
 # Parallel versions of OpenSSH and related tools
 brew "pssh"
+# Show ps output as a tree
+brew "pstree"
 # CLI companion with 200+ commands across 33+ Datadog products
 brew "pup"
-# Monitor data progress through a pipe
+# Monitor data's progress through a pipe
 brew "pv"
 # Highly performant implementation of Python 2 in Python
 brew "pypy"
@@ -147,6 +149,8 @@ brew "qmk/qmk/qmk"
 cask "android-platform-tools"
 # Kext-less implementation of FUSE
 cask "fuse-t"
+# Desktop automation application
+cask "hammerspoon"
 # Text editor
 cask "macvim-app"
 # Tool to create native applications from command-line scripts

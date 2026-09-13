@@ -3,6 +3,7 @@
 {{- $hasGui := promptBoolOnce . "hasGui" "Does this machine have a screen and keyboard" true -}}
 {{- $isPersonalDevice := promptBoolOnce . "isPersonalDevice" "Is this a personal device" true -}}
 {{- $documentsRoot := promptStringOnce . "documentsRoot" "Where to store documents" ( print .chezmoi.homeDir "/Termux docs" ) -}}
+{{- $workEmail := promptStringOnce . "workEmail" "Work email" -}}
 
 {{- /* Remove whitespace */ -}}
 
@@ -12,3 +13,4 @@
     hasGui = {{ $hasGui }}
     isPersonalDevice = {{ $isPersonalDevice }}
     documentsRoot = {{ $documentsRoot | quote }}
+    workEmail = {{ $workEmail | quote }}

@@ -89,6 +89,7 @@ alias ll='ls -lh'
 alias lla='ls -lah'
 alias lsc='ls -G'
 alias ra='ranger'
+alias today='gcalcli --refresh agenda --nodeclined --calendar="${WORK_EMAIL}" "$(date -v+10H +%F)" "$(date -v+10H)T20:00"'
 alias td='date +%F'
 alias v='vim'
 alias y='config'
@@ -103,6 +104,27 @@ alias ys='config status'
 alias ysh='config show'
 
 alias rc='vim ${ZDOTDIR}/.zshrc && source ${ZDOTDIR}/.zshrc'
+alias js='jj status'
+alias jsh='jj show'
+alias jshs='jj show --stat'
+alias jsq='jj squash'
+alias jl='jj log'
+
+JOURN_CMD='cd "$DOCUMENTS_ROOT" \
+  && vim \
+  --cmd "let g:prosession_on_startup=0" \
+  +StartJournaling'
+function j {
+  if jj root 2>/dev/null
+  then
+    jj $@
+  else
+    (eval "$JOURN_CMD")
+  fi
+}
+function jc {
+  (eval "$JOURN_CMD +Censor")
+}
 
 if command -v trash >/dev/null 2>&1; then
   alias rm='trash'
@@ -163,6 +185,7 @@ export LESSOPEN="| src-hilite-lesspipe.sh %s"
 
 GPG_TTY=$(tty)
 export GPG_TTY
+export PINENTRY_USER_DATA="USE_CURSES=1"
 
 export GOPATH=$HOME/go:/Volumes/code/go
 
@@ -181,6 +204,10 @@ jwtd() {
          echo "Signature: $(echo "${1}" | awk -F'.' '{print $3}')"
     fi
 }
+
+eval "$(direnv hook zsh)"
+
+export TMPDIR=/tmp
 
 export TERM=xterm-256color
 

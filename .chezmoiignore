@@ -13,4 +13,5 @@ Library
 {{- end }}
 {{- if not .isPersonalDevice }}
 **/*.personal
+bin/yt-dlp
 {{- end }}

@@ -153,8 +153,6 @@ cask "fuse-t"
 cask "hammerspoon"
 # Text editor
 cask "macvim-app"
-# Tool to create native applications from command-line scripts
-cask "platypus"
 # Toolbox companion for QMK Firmware
 cask "qmk-toolbox"
 # Menu bar customization tool

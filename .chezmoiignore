@@ -10,6 +10,7 @@ tags
 .gvimrc
 **/*.darwin
 Library
+.skhdrc
 {{- end }}
 {{- if not .isPersonalDevice }}
 **/*.personal

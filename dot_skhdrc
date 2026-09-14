@@ -1,0 +1,57 @@
+# Configuration for skhd, the simple hotkey daemon
+#
+# See more at https://github.com/koekeishiya/skhd/blob/master/examples/skhdrc
+
+cmd + alt - v : hs -c 'actions.sneakypaste()'
+
+# nerf this shortcut, since it is a lot like the 'comment' command in Docs (cmd
+# + alt - m) but closes all tabs in Chrome -- why do we even *have* that
+# button?
+cmd + alt - w :
+
+# Switch/launch applications
+# Unused right-handed letters
+# alt - b :
+# alt - d :
+# alt - g :
+# alt - h :
+# alt - r :
+alt - l : hs -c 'actions.app("Google Calendar")' # Calendar (Android uses Meta+L too)
+alt - c : hs -c 'actions.app("Kitty")' # Console
+alt - f : hs -c 'actions.app("Finder")'
+alt - k : hs -c 'actions.app({name = "KeePass", appId = "KeePassXC"})'
+alt - m : hs -c 'actions.app("Gmail")' # mail
+alt + shift - m : hs -c 'actions.app("foobar2000")' # Music
+alt - t : hs -c 'actions.app({name = "Todo.txt", appId = "SwiftoDo Desktop"})'
+alt - v : hs -c 'actions.app("MacVim")' # vim
+alt - w : hs -c 'actions.app("Chrome")' # Web
+
+# Timers
+ctrl + cmd - b : hs -c 'actions.timer("break")'
+ctrl + cmd - w : hs -c 'actions.timer("work")'
+# ctrl + cmd - t : hs -c 'actions.internaltimer()'
+
+ctrl + cmd - l : hs -c 'actions.toggleAudioDevice()' # "Listen"
+
+# Screensaver start (this is produced by space invaders key)
+ctrl + cmd - o : hs -c 'actions.screensaver()'
+
+# Miscellaneous hammerspoon tasks
+ctrl + alt + cmd - r : hs -c 'actions.reload()'
+ctrl + alt + cmd - j : hs -c 'actions.printglobals()'
+ctrl + alt + cmd - q : hs -c 'actions.toggleTextExpansion()'
+
+# Todo.txt quick-add
+ctrl + alt + cmd - t : hs -c 'actions.addtask()'
+
+# Window management
+ctrl + alt + cmd - w : hs -c 'actions.togglefullscreen()'
+
+# Other shortcuts that are in use:
+# ctrl + alt + cmd - c -> : # Isolator
+# ctrl + alt + cmd - l -> : # Screenshot with options (was "Lightshot")
+# ctrl + alt + cmd - s -> : # Screenshot straight to file
+# ctrl + alt + cmd - v -> : # Auto-type
+# ctrl + cmd - c -> : # Itsycal
+
+.load ".skhdrc.after"

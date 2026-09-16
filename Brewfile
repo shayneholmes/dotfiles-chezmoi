@@ -2,7 +2,7 @@ tap "asmvik/formulae", "https://github.com/asmvik/homebrew-formulae.git"
 tap "osx-cross/arm", trusted: true
 tap "osx-cross/avr", trusted: true
 tap "qmk/qmk", trusted: true
-tap "saulpw/vd"
+tap "saulpw/vd", "https://github.com/visidata/homebrew-vd.git"
 tap "visidata/vd", "https://github.com/visidata/homebrew-vd.git"
 tap "wyne/tap"
 # Development kit for the Java programming language
@@ -89,6 +89,8 @@ brew "ncdu"
 brew "neovim"
 # Port scanning utility for large networks
 brew "nmap"
+# Open-source, cross-platform JavaScript runtime environment
+brew "node"
 # Swiss-army knife of markup format conversion
 brew "pandoc"
 # Highly capable, feature-rich programming language
@@ -151,6 +153,10 @@ cask "android-platform-tools"
 cask "fuse-t"
 # Desktop automation application
 cask "hammerspoon"
+# Menu bar manager
+cask "jordanbaird-ice"
+# GPU-based terminal emulator
+cask "kitty"
 # Text editor
 cask "macvim-app"
 # Toolbox companion for QMK Firmware

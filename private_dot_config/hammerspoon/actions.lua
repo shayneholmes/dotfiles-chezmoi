@@ -95,7 +95,7 @@ actions.addtask = function()
   local button, text = hs.dialog.textPrompt("Add todo", "", "", "OK", "Cancel")
   if button == "OK" and text ~= "" then
     text = text:gsub("'", "'\"'\"'")
-    local command = ("/opt/homebrew/bin/todo.sh add '%s'"):format(text)
+    local command = ("/opt/homebrew/bin/todo.sh -t add '%s'"):format(text)
     local output, status = hs.execute(command)
     if status ~= true then
       hs.alert.show(("Got error: %s"):format(output))

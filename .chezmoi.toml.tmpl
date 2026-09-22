@@ -3,7 +3,12 @@
 {{- $hasGui := promptBoolOnce . "hasGui" "Does this machine have a screen and keyboard" true -}}
 {{- $isPersonalDevice := promptBoolOnce . "isPersonalDevice" "Is this a personal device" true -}}
 {{- $documentsRoot := promptStringOnce . "documentsRoot" "Where to store documents" ( print .chezmoi.homeDir "/Termux docs" ) -}}
+{{- $isPersonalDevice := promptBoolOnce . "isPersonalDevice" "Is this a personal device" true -}}
 {{- $workEmail := promptStringOnce . "workEmail" "Work email" -}}
+{{- $syncthingPath := "" -}}
+{{- if $isPersonalDevice -}}
+    {{- $syncthingPath = promptStringOnce . "syncthingPath" "SyncThing path" ( print .chezmoi.homeDir "/Syncthing" ) -}}
+{{- end -}}
 
 {{- /* Remove whitespace */ -}}
 
@@ -14,3 +19,4 @@
     isPersonalDevice = {{ $isPersonalDevice }}
     documentsRoot = {{ $documentsRoot | quote }}
     workEmail = {{ $workEmail | quote }}
+    syncthingPath = {{ $syncthingPath | quote }}

@@ -176,6 +176,7 @@ local expansions = {
   yd = formatDate(DATE_FORMAT_LONG_TEXT, -1), -- yesterday day
   sb = "[Shayne]", -- tb but with s for my name
   segun = "según",
+  teh = "the",
 }
 
 for k,v in pairs(date_expansions) do expansions[k] = v end

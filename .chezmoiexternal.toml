@@ -1,3 +1,6 @@
+[".cache/wordlist.txt"]
+    type = "file"
+    url = "https://github.com/christianp/nulac/raw/refs/heads/master/2of12inf.txt"
 [".config/vim/autoload/plug.vim"]
     type = "file"
     url = "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"

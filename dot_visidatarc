@@ -1,3 +1,5 @@
+import dedupe
+
 options.quitguard = True
 
 def percentile(p):
@@ -8,3 +10,31 @@ def percentile(p):
 
 vd.aggregator('p95', percentile(95))
 vd.aggregator('p99', percentile(99))
+
+## set columns by using -f with a custom sheet and custom file type:
+#    vd -f duplicacy_list duplicacytsv
+class DuplicacyTsvSheet(TsvSheet):
+    pass
+@VisiData.api
+def open_duplicacy_list(vd, p):
+    return DuplicacyTsvSheet(p.base_stem, source=p)
+# the sheet has to get its own empty .knownCols, otherwise all sheets will use the new column types
+DuplicacyTsvSheet.knownCols = DefaultAttrDict()
+DuplicacyTsvSheet.knownCols.files.type = int
+DuplicacyTsvSheet.knownCols.chunks.type = int
+DuplicacyTsvSheet.knownCols.uniq.type = int
+DuplicacyTsvSheet.knownCols.new.type = int
+DuplicacyTsvSheet.knownCols.bytes.type = int
+DuplicacyTsvSheet.knownCols.filesbytes.type = int
+DuplicacyTsvSheet.knownCols.chunksbytes.type = int
+DuplicacyTsvSheet.knownCols.uniqbytes.type = int
+DuplicacyTsvSheet.knownCols.newbytes.type = int
+DuplicacyTsvSheet.knownCols.files.fmtstr = "{:,}"
+DuplicacyTsvSheet.knownCols.chunks.fmtstr = "{:,}"
+DuplicacyTsvSheet.knownCols.uniq.fmtstr = "{:,}"
+DuplicacyTsvSheet.knownCols.new.fmtstr = "{:,}"
+DuplicacyTsvSheet.knownCols.bytes.fmtstr = "{:,}"
+DuplicacyTsvSheet.knownCols.filesbytes.fmtstr = "{:,}"
+DuplicacyTsvSheet.knownCols.chunksbytes.fmtstr = "{:,}"
+DuplicacyTsvSheet.knownCols.uniqbytes.fmtstr = "{:,}"
+DuplicacyTsvSheet.knownCols.newbytes.fmtstr = "{:,}"

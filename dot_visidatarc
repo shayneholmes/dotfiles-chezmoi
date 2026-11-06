@@ -20,6 +20,7 @@ def open_duplicacy_list(vd, p):
     return DuplicacyTsvSheet(p.base_stem, source=p)
 # the sheet has to get its own empty .knownCols, otherwise all sheets will use the new column types
 DuplicacyTsvSheet.knownCols = DefaultAttrDict()
+DuplicacyTsvSheet.knownCols.rev.type = int
 DuplicacyTsvSheet.knownCols.files.type = int
 DuplicacyTsvSheet.knownCols.chunks.type = int
 DuplicacyTsvSheet.knownCols.uniq.type = int

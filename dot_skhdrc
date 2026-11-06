@@ -21,7 +21,7 @@ alt - c : hs -c 'actions.app("Kitty")' # Console
 alt - f : hs -c 'actions.app("Finder")'
 alt - k : hs -c 'actions.app({name = "KeePass", appId = "KeePassXC"})'
 alt - m : hs -c 'actions.app("Gmail")' # mail
-alt + shift - m : hs -c 'actions.app("foobar2000")' # Music
+alt + cmd - m : hs -c 'actions.app("foobar2000")' # Music
 alt - t : hs -c 'actions.app({name = "Todo.txt", appId = "SwiftoDo Desktop"})'
 alt - v : hs -c 'actions.app("MacVim")' # vim
 alt - w : hs -c 'actions.app("Chrome")' # Web

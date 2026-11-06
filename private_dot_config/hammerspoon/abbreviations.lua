@@ -104,6 +104,8 @@ end
 -- abbrevation, the other abbreviation will be impossible to type!
 local immediate_expansions = {
   [";c;"] = "©",
+  [";cent;"] = "¢",
+  [";cents;"] = "¢",
   [";r;"] = "®",
   [";^;"] = "⇑",
   [";v;"] = "⇓",
